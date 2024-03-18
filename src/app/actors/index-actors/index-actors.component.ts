@@ -31,10 +31,10 @@ export class IndexActorsComponent implements OnInit{
     this.actorService.get().subscribe((response: HttpResponse<actorDTO[]>) => {
       this.actors = response.body;
       this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
+      console.log(123);
     });
-
-
     
+
     
     // this.actorService.get().subscribe((actors: actorDTO[]) => {
     //   this.actors = actors;
