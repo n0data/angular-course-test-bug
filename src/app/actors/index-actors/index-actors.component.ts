@@ -27,26 +27,24 @@ export class IndexActorsComponent implements OnInit{
 
     // this.loadActors();
 
-
-    this.actorService.get().subscribe((response: HttpResponse<actorDTO[]>) => {
-      this.actors = response.body;
-      this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
-      console.log(123);
-    });
+      this.loadData();
     
-
+    
     
     // this.actorService.get().subscribe((actors: actorDTO[]) => {
-    //   this.actors = actors;
-    // });
-  }
+      //   this.actors = actors;
+      // });
+    }
+    
+    loadData(){
+    this.actorService.get(this.currentPage, this.pageSize).subscribe((response: HttpResponse<actorDTO[]>) => {
+      this.actors = response.body;
+      this.totalAmountOfRecords = response.headers.get("totalAmountOfRecords");
+      
+      });
+    }
 
 
-  // loadActors(){
-  //   this.actorService.get().subscribe((actors: any) =>{
-  //     this.actors= actors;
-  //   });                
-  // }
 
 
 

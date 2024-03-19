@@ -15,8 +15,11 @@ export class ActorsService {
   private apiURL = environment.apiUrl + '/actors'
 
 
- get(): Observable<any>{
-    return this.http.get<actorDTO[]>(this.apiURL, {observe: 'response'});
+ get(page: number, recordsPerPage: number): Observable<any>{
+  let params = new HttpParams();
+  params = params.append('page', page.toString());
+  params = params.append('recordsPerPage', recordsPerPage.toString());
+    return this.http.get<actorDTO[]>(this.apiURL, {observe: 'response',params});
   }
 
 
