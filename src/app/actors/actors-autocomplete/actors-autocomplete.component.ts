@@ -1,8 +1,10 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatTable } from '@angular/material/table';
+import { actorsMovieDTO } from '../actors.models';
+import { ActorsService } from '../actors.service';
 
 @Component({
   selector: 'app-actors-autocomplete',
@@ -11,39 +13,43 @@ import { MatTable } from '@angular/material/table';
 })
 export class ActorsAutocompleteComponent implements OnInit {
 
-  constructor(){
+  constructor(private actorsService: ActorsService){
 
   }
   
   control: FormControl = new FormControl;
 
 
-  actors=[
-    {name:'Tom Holland',picture:'https://m.media-amazon.com/images/M/MV5BNzZiNTEyNTItYjNhMS00YjI2LWIwMWQtZmYwYTRlNjMyZTJjXkEyXkFqcGdeQXVyMTExNzQzMDE0._V1_.jpg'},
-    {name:'Tom Hanks',picture:'https://m.media-amazon.com/images/M/MV5BMTQ2MjMwNDA3Nl5BMl5BanBnXkFtZTcwMTA2NDY3NQ@@._V1_FMjpg_UX1000_.jpg'},
-    {name:'Sam Jackson',picture:'https://m.media-amazon.com/images/M/MV5BMTQ1NTQwMTYxNl5BMl5BanBnXkFtZTYwMjA1MzY1._V1_FMjpg_UX1000_.jpg'},
-  ]
 
-
-  selectedActors = [];
+  @Input()
+  selectedActors: actorsMovieDTO[] = [];
   
-  originalActors = this.actors;
+  actorsToDisplay: actorsMovieDTO[] = [];
+
 
   columnsToDisplay = ['picture', 'name', 'character','actions']
 
   @ViewChild(MatTable) table: MatTable<any>;
 
   ngOnInit(): void {
-    this.control.valueChanges.subscribe(value =>{
-       this.actors= this.originalActors;
-       this.actors = this.actors.filter(actor => actor.name.indexOf(value) !== -1);
+    this.control.valueChanges.subscribe(value => {
+      this.actorsService.searchByName(value).subscribe(actors => {
+        this.actorsToDisplay = actors;
+      });
     })
   }
 
   optionSelected(event: MatAutocompleteSelectedEvent){
     console.log(event.option.value);
-    this.selectedActors.push(event.option.value);
+
     this.control.patchValue('');
+
+    if (this.selectedActors.findIndex(x => x.id == event.option.value.id) !== -1){
+      return;
+    }
+
+
+    this.selectedActors.push(event.option.value);
     if (this.table !== undefined){
       this.table.renderRows();
     }
@@ -57,8 +63,8 @@ export class ActorsAutocompleteComponent implements OnInit {
   }
 
   dropped(event: CdkDragDrop<any[]>){
-     const previousIndex = this.selectedActors.findIndex(actor => actor ==event.item.data);
-     moveItemInArray(this.selectedActors, previousIndex,event.currentIndex);
+     const previousIndex = this.selectedActors.findIndex(actor => actor === event.item.data);
+     moveItemInArray(this.selectedActors, previousIndex, event.currentIndex);
      this.table.renderRows();
   }
 

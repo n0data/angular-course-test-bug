@@ -32,7 +32,7 @@ export function parseWebAPIErrors(response:any): string[]{
 
 
 
-export function formatDateForData(date: Date){
+export function formatDateFormData(date: Date){
 
     date = new Date(date);
     const format = new Intl.DateTimeFormat('en',{

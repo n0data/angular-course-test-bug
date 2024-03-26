@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { actorCrationDTO, actorDTO } from './actors.models';
-import { formatDateForData } from '../utilities/utils';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { actorCrationDTO, actorDTO, actorsMovieDTO } from './actors.models';
+import { formatDateFormData } from '../utilities/utils';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 
@@ -23,9 +23,31 @@ export class ActorsService {
   }
 
 
-  // get(): Observable<actorDTO[]>{
-  //   return this.http.get<actorDTO[]>(this.apiURL);
-  // }
+  searchByName(name: string) : Observable<actorsMovieDTO[]>{
+    const headers =new HttpHeaders('Content-Type: application/json');
+    return this.http.post<actorsMovieDTO[]>(`${this.apiURL}/searchByName`, 
+    JSON.stringify(name),{headers});
+  }
+
+
+  getById(id: number): Observable<actorDTO>{
+    return  this.http.get<actorDTO>(`${this.apiURL}/${id}`);
+  }
+
+
+
+
+
+  edit(id: number, actor: actorCrationDTO){
+    const formData = this.buildFormData(actor);
+    return this.http.put(`${this.apiURL}/${id}`, formData);
+  }
+
+  delete(id:number){
+    return this.http.delete(`${this.apiURL}/${id}`);
+  }
+
+
 
 
   create (actor: actorCrationDTO){
@@ -44,7 +66,7 @@ export class ActorsService {
     }
 
     if(actor.dateOfBirth){
-      formData.append('dateOfBirth', formatDateForData(actor.dateOfBirth));
+      formData.append('dateOfBirth', formatDateFormData(actor.dateOfBirth));
     }
 
     if(actor.picture){

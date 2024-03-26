@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActorsService } from '../actors.service';
 import { actorDTO } from '../actors.models';
 import { HttpResponse } from '@angular/common/http';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -44,12 +45,19 @@ export class IndexActorsComponent implements OnInit{
       });
     }
 
+    updatePagination(event: PageEvent){
+      this.currentPage = event.pageIndex +1;
+      this.pageSize = event.pageSize;
+      this.loadData();
+    }
 
 
 
 
-  delete(){
-    
+  delete(id :number){
+    this.actorService.delete(id).subscribe(()=>{
+      this.loadData();
+    });
   }
 
 }

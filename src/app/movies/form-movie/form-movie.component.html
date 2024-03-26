@@ -32,6 +32,7 @@
 
     <app-input-markdown
         [markdownContent]="model?.summary"
+        [label]="'Summary'"
         (changeMarkdown)="changeMarkdown($event)"
     ></app-input-markdown>
 
@@ -48,7 +49,7 @@
 
     <h4>Select the actors</h4>
 
-    <app-actors-autocomplete></app-actors-autocomplete>
+    <app-actors-autocomplete [selectedActors]="selectedActors"></app-actors-autocomplete>
 
 
 

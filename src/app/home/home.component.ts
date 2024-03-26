@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesService } from '../movies/movies.service';
 
 @Component({
   selector: 'app-home',
@@ -7,24 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+
+  constructor(private moviesService: MoviesService){}
+
   ngOnInit(): void {
-    this.moviesInTheaters =[
-      {
-      title: 'Spiderman',
-      releaseDate: new Date(),
-      price : 1400.99,
-      poster: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_.jpg'
-    },
-    {
-      title: 'moana',
-      releaseDate: new Date(),
-      price : 234.99,
-      poster: 'https://m.media-amazon.com/images/M/MV5BMjI4MzU5NTExNF5BMl5BanBnXkFtZTgwNzY1MTEwMDI@._V1_FMjpg_UX1000_.jpg'
-    }
-  ];
-  this.moviesFutureReleases = [
-  ];
+    this.moviesService.getHomePageMovies().subscribe(homeDTO => {
+      this.moviesFutureReleases = homeDTO.upcomingReleases;
+      this.moviesInTheaters = homeDTO.inTheaters;
+    })
+
+
   }
+
     moviesInTheaters;
     moviesFutureReleases;
 

@@ -4,6 +4,7 @@ export interface movieTheatersCreationDTO{
 } 
 
 export interface movieTheatersDTO{
+    id: number;
     name: string;
 
 } 
