@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MoviePostGetDTO, MoviePutGetDTO, homeDTO, movieCreationDTO, movieDTO } from './movies.model';
 import { formatDateFormData } from '../utilities/utils';
 
@@ -29,6 +29,15 @@ export class MoviesService {
     return this.http.put(`${this.apiURL}/${id}`, formData);
   }
 
+  public filter(values: any): Observable<any>{
+    const params = new HttpParams ({fromObject: values});
+    return this.http.get<movieDTO[]>(`${this.apiURL}/filter`, {params, observe: 'response'});
+
+  }
+
+  public delete(id:number){
+    return this.http.delete(`${this.apiURL}/${id}`);
+  }
 
 
 
