@@ -41,6 +41,7 @@ import { MultipleSelectorComponent } from './utilities/multiple-selector/multipl
 import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors-autocomplete.component';
 import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
+import { AuthorizeViewComponent } from './security/authorize-view/authorize-view.component';
 
 
 
@@ -75,7 +76,8 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
     MultipleSelectorComponent,
     ActorsAutocompleteComponent,
     DisplayErrorsComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    AuthorizeViewComponent
     
   ],
   imports: [
