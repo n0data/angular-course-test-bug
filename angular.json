@@ -41,10 +41,10 @@
 
             ],
             "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
+            
+            "prerender": false,
             "ssr": {
-              "entry": "server.ts"
+              
             }
           },
           "configurations": {
@@ -67,6 +67,8 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
+              "ssr": false, 
+              "prerender": false ,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

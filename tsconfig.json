@@ -39,7 +39,8 @@
     "strictTemplates": false,
     "http.proxySupport": "off",
     "fullTemplateTypeCheck": true, 
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "_enabledBlockTypes": ["if","for","switch","defer"]
   }
   
 }
